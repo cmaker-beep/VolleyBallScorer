@@ -9,11 +9,11 @@ function updateDisplay() {
 function changeScore(team, amount) {
 
     if (team === "A") {
-        scoreA += amount;
+        scoreA = scoreA + amount;
     }
 
     if (team === "B") {
-        scoreB += amount;
+        scoreB = scoreB + amount;
     }
 
     updateDisplay();

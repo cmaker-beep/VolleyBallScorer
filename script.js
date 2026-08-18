@@ -16,17 +16,19 @@ function updateDisplay() {
     document.getElementById("scoreB").textContent = scoreB;
 }
 
-function changeScore(team, amount) {
+async function changeScore(team, amount) {
 
     if (team === "A") {
-        scoreA = scoreA + amount;
+        scoreA += amount;
     }
 
     if (team === "B") {
-        scoreB = scoreB + amount;
+        scoreB += amount;
     }
 
     updateDisplay();
+
+    await saveScore();
 }
 
 function resetScores() {
@@ -55,6 +57,21 @@ async function loadScore() {
     scoreB = data.teamB_score || 0;
 
     updateDisplay();
+}
+
+async function saveScore() {
+
+    const { error } = await sb
+        .from("scores")
+        .update({
+            teamA_score: scoreA,
+            teamB_score: scoreB
+        })
+        .eq("match_id", currentMatchId);
+
+    if (error) {
+        console.error(error);
+    }
 }
 
 window.changeScore = changeScore;

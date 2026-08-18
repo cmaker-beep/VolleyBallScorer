@@ -1,29 +1,31 @@
-console.log("START");
-
-async function changeScore(team, amount) {
-    console.log(team, amount);
-}
-
-async function resetScores() {
-    console.log("reset");
-}
+let scoreA = 0;
+let scoreB = 0;
 
 function updateDisplay() {
-    console.log("updateDisplay called");
-    console.log("scoreA =", scoreA);
-    console.log("scoreB =", scoreB);
+    document.getElementById("scoreA").textContent = scoreA;
+    document.getElementById("scoreB").textContent = scoreB;
+}
 
-    const scoreAElement = document.getElementById("scoreA");
-    const scoreBElement = document.getElementById("scoreB");
+function changeScore(team, amount) {
 
-    console.log(scoreAElement);
-    console.log(scoreBElement);
+    if (team === "A") {
+        scoreA += amount;
+    }
 
-    scoreAElement.textContent = scoreA;
-    scoreBElement.textContent = scoreB;
+    if (team === "B") {
+        scoreB += amount;
+    }
+
+    updateDisplay();
+}
+
+function resetScores() {
+    scoreA = 0;
+    scoreB = 0;
+    updateDisplay();
 }
 
 window.changeScore = changeScore;
 window.resetScores = resetScores;
 
-console.log("END");
+updateDisplay();

@@ -7,6 +7,7 @@ async function changeScore(team, amount) {
 async function resetScores() {
     console.log("reset");
 }
+
 function updateDisplay() {
     console.log("updateDisplay called");
     console.log("scoreA =", scoreA);

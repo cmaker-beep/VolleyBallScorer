@@ -83,4 +83,40 @@ async function loadScore() {
     updateDisplay();
 }
 
-updateDisplay();
+
+
+
+async function saveScore() {
+
+    const { error } = await supabase
+        .from("scores")
+        .update({
+            teamA_score: scoreA,
+            teamB_score: scoreB
+        })
+        .eq("match_id", currentMatchId);
+
+    if (error) {
+        console.error("Save failed:", error);
+    }
+}
+
+
+async function changeScore(team, amount) {
+
+    if (team === "A") {
+        scoreA = Math.max(0, scoreA + amount);
+    }
+
+    if (team === "B") {
+        scoreB = Math.max(0, scoreB + amount);
+    }
+
+    updateDisplay();
+
+    await saveScore();
+}
+
+window.changeScore = changeScore;
+
+loadScore();

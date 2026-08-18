@@ -1,27 +1,45 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <div class="heading">
-    <h1>My VolleyBall Scorer App</h1>
-</div>
-    <h2>Scores</h2>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volleyball Scorer</title>
+    styles.css
+</head>
+<body>
 
-   <h1>Volleyball Scorer</h1>
+    <div class="container">
+        <h1>Volleyball Scorer</h1>
 
-    <button onclick="loadScores()">Load Scores</button>
+        <div class="scoreboard">
 
-    <div id="results"></div>
+            <div class="team-card">
+                <h2>Team A</h2>
+                <div id="scoreA" class="score">0</div>
 
-    <!-- Supabase library -->
-    https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+                <div class="button-group">
+                    <button class="add-btn" onclick="changeScore('A', 1)">+</button>
+                    <button class="subtract-btn" onclick="changeScore('A', -1)">−</button>
+                </div>
+            </div>
 
-    <!-- Your code -->
-    <script src="script.js"></script>
-    <script src="./script.js"></script>
-  </body>
+            <div class="team-card">
+                <h2>Team B</h2>
+                <div id="scoreB" class="score">0</div>
+
+                <div class="button-group">
+                    <button class="add-btn" onclick="changeScore('B', 1)">+</button>
+                    <button class="subtract-btn" onclick="changeScore('B', -1)">−</button>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="reset-btn" onclick="resetScores()">
+            Reset Match
+        </button>
+    </div>
+
+    <cript.js
+</body>
 </html>
-
-

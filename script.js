@@ -34,8 +34,30 @@ function resetScores() {
     scoreB = 0;
     updateDisplay();
 }
+const currentMatchId = 1;
+
+async function loadScore() {
+
+    const { data, error } = await sb
+        .from("scores")
+        .select("*")
+        .eq("match_id", currentMatchId)
+        .single();
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    console.log(data);
+
+    scoreA = data.teamA_score || 0;
+    scoreB = data.teamB_score || 0;
+
+    updateDisplay();
+}
 
 window.changeScore = changeScore;
 window.resetScores = resetScores;
 
-updateDisplay();
+loadScore();

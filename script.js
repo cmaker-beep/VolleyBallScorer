@@ -61,13 +61,21 @@ async function loadScore() {
 
 async function saveScore() {
 
-    const { error } = await sb
+    console.log("Attempting save...");
+    console.log("A:", scoreA);
+    console.log("B:", scoreB);
+
+    const { data, error } = await sb
         .from("scores")
         .update({
             teamA_score: scoreA,
             teamB_score: scoreB
         })
-        .eq("match_id", currentMatchId);
+        .eq("match_id", currentMatchId)
+        .select();
+
+    console.log("Data:", data);
+    console.log("Error:", error);
 
     if (error) {
         console.error(error);

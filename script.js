@@ -68,8 +68,8 @@ async function saveScore() {
     const { data, error } = await sb
         .from("scores")
         .update({
-            teamA_score: scoreA,
-            teamB_score: scoreB
+            team_a_score: scoreA,
+            team_b_score: scoreB
         })
         .eq("match_id", currentMatchId)
         .select();

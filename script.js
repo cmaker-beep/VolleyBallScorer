@@ -8,10 +8,18 @@ async function resetScores() {
     console.log("reset");
 }
 function updateDisplay() {
-    console.log("Updating display", scoreA, scoreB);
+    console.log("updateDisplay called");
+    console.log("scoreA =", scoreA);
+    console.log("scoreB =", scoreB);
 
-    document.getElementById("scoreA").textContent = scoreA;
-    document.getElementById("scoreB").textContent = scoreB;
+    const scoreAElement = document.getElementById("scoreA");
+    const scoreBElement = document.getElementById("scoreB");
+
+    console.log(scoreAElement);
+    console.log(scoreBElement);
+
+    scoreAElement.textContent = scoreA;
+    scoreBElement.textContent = scoreB;
 }
 
 window.changeScore = changeScore;

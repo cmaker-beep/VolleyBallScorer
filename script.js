@@ -53,8 +53,8 @@ async function loadScore() {
 
     console.log(data);
 
-    scoreA = data.teamA_score || 0;
-    scoreB = data.teamB_score || 0;
+    scoreA = data.team_a_score || 0;
+    scoreB = data.team_b_score || 0;
 
     updateDisplay();
 }

@@ -62,4 +62,25 @@ function resetScores() {
     // saveScore();
 }
 
+let currentMatchId = 1;
+
+async function loadScore() {
+
+    const { data, error } = await supabase
+        .from("scores")
+        .select("*")
+        .eq("match_id", currentMatchId)
+        .single();
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    scoreA = data.teamA_score;
+    scoreB = data.teamB_score;
+
+    updateDisplay();
+}
+
 updateDisplay();

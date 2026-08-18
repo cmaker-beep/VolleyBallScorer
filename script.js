@@ -1,3 +1,7 @@
+// =========================
+// SUPABASE CONFIG
+// =========================
+
 const SUPABASE_URL = "https://xwadebhflihczxlhjrpg.supabase.co";
 const SUPABASE_KEY = "sb_publishable_4eu0Bs4poL4gOiMoVFAgKA_yp7w_c83";
 
@@ -5,66 +9,32 @@ const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+
+console.log("Supabase connected");
+
+// =========================
+// VARIABLES
+// =========================
+
 let scoreA = 0;
 let scoreB = 0;
+let currentMatchId = 1;
 
-// ======================================
-// SUPABASE PLACEHOLDER
-// ======================================
-
-// import { createClient } from
-// 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-// const supabaseUrl = 'YOUR_SUPABASE_URL'
-// const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'
-
-// const supabase = createClient(
-//     supabaseUrl,
-//     supabaseKey
-// )
-
-// async function saveScore() {
-//     // TODO: Save scores to Supabase
-// }
-
-// async function loadScore() {
-//     // TODO: Load scores from Supabase
-// }
-
-// ======================================
+// =========================
+// DISPLAY
+// =========================
 
 function updateDisplay() {
     document.getElementById("scoreA").textContent = scoreA;
     document.getElementById("scoreB").textContent = scoreB;
 }
 
-function changeScore(team, amount) {
-
-    if (team === "A") {
-        scoreA = Math.max(0, scoreA + amount);
-    }
-
-    if (team === "B") {
-        scoreB = Math.max(0, scoreB + amount);
-    }
-
-    updateDisplay();
-
-    // saveScore();
-}
-
-function resetScores() {
-    scoreA = 0;
-    scoreB = 0;
-
-    updateDisplay();
-
-    // saveScore();
-}
-
-let currentMatchId = 1;
+// =========================
+// LOAD SCORE FROM SUPABASE
+// =========================
 
 async function loadScore() {
+    console.log("Loading score...");
 
     const { data, error } = await supabase
         .from("scores")
@@ -73,20 +43,24 @@ async function loadScore() {
         .single();
 
     if (error) {
-        console.error(error);
+        console.error("Load failed:", error);
         return;
     }
 
-    scoreA = data.teamA_score;
-    scoreB = data.teamB_score;
+    console.log("Loaded:", data);
+
+    scoreA = data.teamA_score || 0;
+    scoreB = data.teamB_score || 0;
 
     updateDisplay();
 }
 
-
-
+// =========================
+// SAVE SCORE TO SUPABASE
+// =========================
 
 async function saveScore() {
+    console.log(`Saving A:${scoreA} B:${scoreB}`);
 
     const { error } = await supabase
         .from("scores")
@@ -98,9 +72,15 @@ async function saveScore() {
 
     if (error) {
         console.error("Save failed:", error);
+        return;
     }
+
+    console.log("Score saved");
 }
 
+// =========================
+// CHANGE SCORE
+// =========================
 
 async function changeScore(team, amount) {
 
@@ -113,10 +93,30 @@ async function changeScore(team, amount) {
     }
 
     updateDisplay();
-
     await saveScore();
 }
 
+// =========================
+// RESET SCORE
+// =========================
+
+async function resetScores() {
+    scoreA = 0;
+    scoreB = 0;
+
+    updateDisplay();
+    await saveScore();
+}
+
+// =========================
+// EXPOSE TO HTML
+// =========================
+
 window.changeScore = changeScore;
+window.resetScores = resetScores;
+
+// =========================
+// STARTUP
+// =========================
 
 loadScore();

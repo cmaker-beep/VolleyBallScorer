@@ -61,10 +61,6 @@ async function loadScore() {
 
 async function saveScore() {
 
-    console.log("Attempting save...");
-    console.log("A:", scoreA);
-    console.log("B:", scoreB);
-
     const { data, error } = await sb
         .from("scores")
         .update({
@@ -74,12 +70,8 @@ async function saveScore() {
         .eq("match_id", currentMatchId)
         .select();
 
-    console.log("Data:", data);
-    console.log("Error:", error);
-
-    if (error) {
-        console.error(error);
-    }
+    console.log("Save data:", data);
+    console.log("Save error:", error);
 }
 
 window.changeScore = changeScore;

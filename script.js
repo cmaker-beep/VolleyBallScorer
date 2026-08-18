@@ -1,3 +1,4 @@
+console.log("script loaded");
 let scoreA = 0;
 let scoreB = 0;
 

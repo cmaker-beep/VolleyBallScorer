@@ -5,60 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volleyball Scoring System</title>
 
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f4f6f9;
-        }
-
-        .login-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .login-card h1 {
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-        }
-
-        .login-btn {
-            background: #0066ff;
-            color: white;
-        }
-
-        .guest-btn {
-            background: #e5e5e5;
-        }
-
-        #message {
-            margin-top: 10px;
-            color: red;
-        }
-    </style>
+    .css">
 </head>
 <body>
 
@@ -66,49 +13,82 @@
 
         <h1>🏐 Volleyball Scorer</h1>
 
-        <input type="email" id="email" placeholder="Email">
+        <input
+            type="text"
+            id="username"
+            placeholder="Username"
+        >
 
-        <input type="password" id="password" placeholder="Password">
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
 
-        <button class="btn login-btn" onclick="login()">
+        <button onclick="login()">
             Login
         </button>
 
-        <button class="btn guest-btn" onclick="continueAsGuest()">
+        <button onclick="continueAsGuest()">
             Continue as Guest
         </button>
 
-        <div id="message"></div>
+        <p id="message"></p>
 
     </div>
 
-    .net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        const SUPABASE_URL = "YOUR_SUPABASE_URL";
-        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-        const supabase = window.supabase.createClient(
+        const SUPABASE_URL = "https://xwadebhflihczxlhjrpg.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_4eu0Bs4poL4gOiMoVFAgKA_yp7w_c83";
+
+        const sb = window.supabase.createClient(
             SUPABASE_URL,
-            SUPABASE_ANON_KEY
+            SUPABASE_KEY
         );
 
         async function login() {
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const message = document.getElementById("message");
 
-            const { error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
+            const { data, error } = await sb
+                .from("Users")
+                .select("*")
+                .eq("name", username)
+                .eq("password", password);
 
             if (error) {
-                document.getElementById("message").innerText = error.message;
+
+                console.error(error);
+
+                message.textContent = "Login Denied";
+                message.style.color = "red";
+
                 return;
             }
 
-            window.location.href = "scorer.html";
+            if (data.length > 0) {
+
+                message.textContent = "Login OK";
+                message.style.color = "green";
+
+                sessionStorage.setItem("userId", data[0].id);
+                sessionStorage.setItem("userName", data[0].name);
+
+                setTimeout(() => {
+                    window.location.href = "scorer.html";
+                }, 1000);
+
+            } else {
+
+                message.textContent = "Login Denied";
+                message.style.color = "red";
+
+            }
         }
 
         function continueAsGuest() {
@@ -118,16 +98,6 @@
             window.location.href = "scorer.html";
         }
 
-        async function checkSession() {
-
-            const { data } = await supabase.auth.getSession();
-
-            if (data.session) {
-                window.location.href = "scorer.html";
-            }
-        }
-
-        checkSession();
     </script>
 
 </body>

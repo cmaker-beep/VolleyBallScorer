@@ -26,7 +26,7 @@ async function login() {
             .from("Users")
             .select("*");
 
-        console.log("USERS TABLE DATA:", data);
+        console.log(JSON.stringify(data, null, 2));
         console.log("USERS TABLE ERROR:", error);
 
         if (error) {

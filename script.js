@@ -17,40 +17,27 @@ function updateDisplay() {
 }
 async function login() {
 
+    console.log("LOGIN BUTTON CLICKED");
+
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
     const { data, error } = await sb
-    .from("Users")
-    .select("*")
-    .eq("username", username)
-    .eq("Password", password);
-    
+        .from("Users")
+        .select("*")
+        .eq("username", username)
+        .eq("Password", password);
+
+    console.log("data =", data);
+    console.log("error =", error);
 
     if (error) {
-        console.error(error);
-        alert("Login Denied");
+        alert(JSON.stringify(error));
         return;
     }
 
-    if (data.length > 0) {
-
-        alert("Login OK");
-
-        // Optional: remember who logged in
-        sessionStorage.setItem("userId", data[0].id);
-        sessionStorage.setItem("userName", data[0].username);
-
-        // Optional: move to scorer page
-        // window.location.href = "scorer.html";
-
-    } else {
-
-        alert("Login Denied");
-
-    }
+    alert("Login OK");
 }
-
 async function changeScore(team, amount) {
 
     if (team === "A") {

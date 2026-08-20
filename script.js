@@ -28,13 +28,15 @@ async function login() {
         .select("*")
         .eq("username", username);
 
+    console.log("Query Result:", data);
+    console.log("Error:", error);
+
     if (error) {
-        console.error(error);
         alert("Login Denied");
         return;
     }
 
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
         alert("Login Denied");
         return;
     }

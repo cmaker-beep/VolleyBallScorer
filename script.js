@@ -151,8 +151,12 @@ window.resetScores = resetScores;
 // Load Score Only On Scorer Page
 // =========================
 
-if (document.getElementById("scoreA")) {
+if (
+    document.getElementById("scoreA") &&
+    document.getElementById("scoreB")
+) {
     loadScore();
+}
 
 }
 }

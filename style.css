@@ -174,5 +174,24 @@ body {
 }
 
 .login-card button:last-of-type:hover {
-    background: #d6
+    background: #d6d6d6;
+}
 
+/* Status Message */
+
+#message {
+    margin-top: 15px;
+    min-height: 20px;
+    font-weight: bold;
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+    .login-card {
+        width: 90%;
+        padding: 20px;
+    }
+
+}

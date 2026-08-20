@@ -153,4 +153,6 @@ window.resetScores = resetScores;
 
 if (document.getElementById("scoreA")) {
     loadScore();
+
+}
 }

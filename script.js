@@ -23,8 +23,8 @@ async function login() {
     const { data, error } = await sb
         .from("Users")
         .select("*")
-        .eq("name", username)
-        .eq("password", password);
+        .eq("Name", username)
+        .eq("Password", password);
 
     if (error) {
         console.error(error);

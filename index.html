@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volleyball Scoring System</title>
- <link rel="stylesheet" href="style.css">
-    
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -37,68 +37,8 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script>
-
-        const SUPABASE_URL = "https://xwadebhflihczxlhjrpg.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_4eu0Bs4poL4gOiMoVFAgKA_yp7w_c83";
-
-        const sb = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-        async function login() {
-
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value.trim();
-            const message = document.getElementById("message");
-
-            const { data, error } = await sb
-                .from("Users")
-                .select("*")
-                .eq("name", username)
-                .eq("password", password);
-
-            if (error) {
-
-                console.error(error);
-
-                message.textContent = "Login Denied";
-                message.style.color = "red";
-
-                return;
-            }
-
-            if (data.length > 0) {
-
-                message.textContent = "Login OK";
-                message.style.color = "green";
-
-                sessionStorage.setItem("userId", data[0].id);
-                sessionStorage.setItem("userName", data[0].name);
-
-                setTimeout(() => {
-                    window.location.href = "scorer.html";
-                }, 1000);
-
-            } else {
-
-                message.textContent = "Login Denied";
-                message.style.color = "red";
-
-            }
-        }
-
-        function continueAsGuest() {
-
-            sessionStorage.setItem("guestMode", "true");
-
-            window.location.href = "scorer.html";
-        }
-
-    </script>
+    <script>supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>

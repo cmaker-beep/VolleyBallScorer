@@ -15,6 +15,40 @@ function updateDisplay() {
     document.getElementById("scoreA").textContent = scoreA;
     document.getElementById("scoreB").textContent = scoreB;
 }
+async function login() {
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const { data, error } = await sb
+        .from("Users")
+        .select("*")
+        .eq("name", username)
+        .eq("password", password);
+
+    if (error) {
+        console.error(error);
+        alert("Login Denied");
+        return;
+    }
+
+    if (data.length > 0) {
+
+        alert("Login OK");
+
+        // Optional: remember who logged in
+        sessionStorage.setItem("userId", data[0].id);
+        sessionStorage.setItem("userName", data[0].name);
+
+        // Optional: move to scorer page
+        // window.location.href = "scorer.html";
+
+    } else {
+
+        alert("Login Denied");
+
+    }
+}
 
 async function changeScore(team, amount) {
 

@@ -21,10 +21,11 @@ async function login() {
     const password = document.getElementById("password").value.trim();
 
     const { data, error } = await sb
-        .from("Users")
-        .select("*")
-        .eq("Name", username)
-        .eq("Password", password);
+    .from("Users")
+    .select("*")
+    .eq("username", username)
+    .eq("password", password);
+    
 
     if (error) {
         console.error(error);

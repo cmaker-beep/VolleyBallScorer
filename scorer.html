@@ -3,46 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volleyball Scorer</title>
+    <title>Volleyball Scoring System</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f4f6f9;
+        }
+
+        .login-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .login-card h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .login-btn {
+            background: #0066ff;
+            color: white;
+        }
+
+        .guest-btn {
+            background: #e5e5e5;
+        }
+
+        #message {
+            margin-top: 10px;
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Volleyball Scorer</h1>
+    <div class="login-card">
 
-        <div class="scoreboard">
+        <h1>🏐 Volleyball Scorer</h1>
 
-            <div class="team-card">
-                <h2>Team A</h2>
-                <div id="scoreA" class="score">0</div>
+        <input type="email" id="email" placeholder="Email">
 
-                <div class="button-group">
-                    <button class="add-btn" onclick="changeScore('A', 1)">+</button>
-                    <button class="subtract-btn" onclick="changeScore('A', -1)">−</button>
-                </div>
-            </div>
+        <input type="password" id="password" placeholder="Password">
 
-            <div class="team-card">
-                <h2>Team B</h2>
-                <div id="scoreB" class="score">0</div>
-
-                <div class="button-group">
-                    <button class="add-btn" onclick="changeScore('B', 1)">+</button>
-                    <button class="subtract-btn" onclick="changeScore('B', -1)">−</button>
-                </div>
-            </div>
-
-        </div>
-
-        <button class="reset-btn" onclick="resetScores()">
-            Reset Match
+        <button class="btn login-btn" onclick="login()">
+            Login
         </button>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   
 
-<script src="script.js"></script>
+        <button class="btn guest-btn" onclick="continueAsGuest()">
+            Continue as Guest
+        </button>
+
+        <div id="message"></div>
+
+    </div>
+
+    .net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const SUPABASE_URL = "YOUR_SUPABASE_URL";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+        const supabase = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+        async function login() {
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) {
+                document.getElementById("message").innerText = error.message;
+                return;
+            }
+
+            window.location.href = "scorer.html";
+        }
+
+        function continueAsGuest() {
+
+            sessionStorage.setItem("guestMode", "true");
+
+            window.location.href = "scorer.html";
+        }
+
+        async function checkSession() {
+
+            const { data } = await supabase.auth.getSession();
+
+            if (data.session) {
+                window.location.href = "scorer.html";
+            }
+        }
+
+        checkSession();
+    </script>
 
 </body>
 </html>

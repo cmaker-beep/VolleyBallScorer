@@ -79,6 +79,30 @@ function logoutGuest() {
 
 }
 
+ async function loadScore() {
+
+            const { data, error } = await sb
+                .from("scores")
+                .select("*")
+                .eq("match_id", currentMatchId)
+                .single();
+
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            document.getElementById("scoreA").textContent =
+                data.team_a_score || 0;
+
+            document.getElementById("scoreB").textContent =
+                data.team_b_score || 0;
+        }
+
+        loadScore();
+
+        setInterval(loadScore, 3000);
+
 
 // =========================
 // Volleyball Scoring

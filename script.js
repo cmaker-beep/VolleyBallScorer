@@ -20,36 +20,43 @@ async function login() {
 
     console.log("LOGIN BUTTON CLICKED");
 
-    try {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-        const { data, error } = await sb
-            .from("Users")
-            .select("*");
+    const { data, error } = await sb
+        .from("Users")
+        .select("*")
+        .eq("username", username);
 
-        console.log("USERS TABLE:");
-        console.table(data);
+    if (error) {
+        console.error(error);
+        alert("Login Denied");
+        return;
+    }
 
-        if (data && data.length > 0) {
-            console.log("FIRST RECORD:");
-            console.log(data[0]);
-        }
+    if (data.length === 0) {
+        alert("Login Denied");
+        return;
+    }
 
-        if (error) {
-            console.error(error);
-            alert("Supabase Error: " + error.message);
-            return;
-        }
+    const user = data[0];
 
-        alert("Check the Console (F12)");
+    if (user.Password === password) {
 
-    } catch (err) {
+        alert("Login OK");
 
-        console.error(err);
-        alert("Unexpected Error: " + err.message);
+        sessionStorage.setItem("userId", user.id);
+        sessionStorage.setItem("username", user.username);
+        sessionStorage.setItem("name", user.Name);
+
+        window.location.href = "scorer.html";
+
+    } else {
+
+        alert("Login Denied");
 
     }
 }
-
 function continueAsGuest() {
 
     sessionStorage.setItem("guestMode", "true");

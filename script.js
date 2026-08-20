@@ -39,7 +39,7 @@ async function login() {
 
         // Optional: remember who logged in
         sessionStorage.setItem("userId", data[0].id);
-        sessionStorage.setItem("userName", data[0].name);
+        sessionStorage.setItem("userName", data[0].username);
 
         // Optional: move to scorer page
         // window.location.href = "scorer.html";

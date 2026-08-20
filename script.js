@@ -59,6 +59,13 @@ async function login() {
 
     }
 }
+function logout() {
+
+    sessionStorage.clear();
+
+    window.location.href = "index.html";
+
+}
 function continueAsGuest() {
 
     sessionStorage.setItem("guestMode", "true");
@@ -86,13 +93,7 @@ function updateDisplay() {
     scoreBElement.textContent = scoreB;
 }
 
-function logout() {
 
-    sessionStorage.clear();
-
-    window.location.href = "index.html";
-
-}
 
 async function changeScore(team, amount) {
 

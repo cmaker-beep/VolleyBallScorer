@@ -26,19 +26,25 @@ async function login() {
             .from("Users")
             .select("*");
 
-        console.log(JSON.stringify(data, null, 2));
-        console.log("USERS TABLE ERROR:", error);
+        console.log("USERS TABLE:");
+        console.table(data);
+
+        if (data && data.length > 0) {
+            console.log("FIRST RECORD:");
+            console.log(data[0]);
+        }
 
         if (error) {
+            console.error(error);
             alert("Supabase Error: " + error.message);
             return;
         }
 
-        alert("Check the browser console (F12) for returned data.");
+        alert("Check the Console (F12)");
 
     } catch (err) {
 
-        console.error("Unexpected Error:", err);
+        console.error(err);
         alert("Unexpected Error: " + err.message);
 
     }
@@ -81,8 +87,13 @@ async function changeScore(team, amount) {
         scoreB += amount;
     }
 
-    if (scoreA < 0) scoreA = 0;
-    if (scoreB < 0) scoreB = 0;
+    if (scoreA < 0) {
+        scoreA = 0;
+    }
+
+    if (scoreB < 0) {
+        scoreB = 0;
+    }
 
     updateDisplay();
 
@@ -117,6 +128,8 @@ async function loadScore() {
         return;
     }
 
+    console.log("Score Loaded:", data);
+
     scoreA = data.team_a_score || 0;
     scoreB = data.team_b_score || 0;
 
@@ -135,11 +148,14 @@ async function saveScore() {
 
     if (error) {
         console.error(error);
+        return;
     }
+
+    console.log("Score Saved");
 }
 
 // =========================
-// Make Functions Available
+// Make Functions Global
 // =========================
 
 window.login = login;
@@ -156,7 +172,4 @@ if (
     document.getElementById("scoreB")
 ) {
     loadScore();
-}
-
-}
 }

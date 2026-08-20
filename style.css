@@ -195,3 +195,35 @@ body {
     }
 
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #0066ff;
+    color: white;
+
+    padding: 12px 20px;
+}
+
+.nav-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logout-btn {
+    background: white;
+    color: #0066ff;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background: #f2f2f2;
+}

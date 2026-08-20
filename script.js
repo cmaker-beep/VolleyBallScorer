@@ -24,7 +24,7 @@ async function login() {
     .from("Users")
     .select("*")
     .eq("username", username)
-    .eq("password", password);
+    .eq("Password", password);
     
 
     if (error) {

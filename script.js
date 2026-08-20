@@ -72,6 +72,13 @@ function continueAsGuest() {
     window.location.href = "scoreboard.html";
 
 }
+function logoutGuest() {
+
+    sessionStorage.clear();
+    window.location.href = "index.html";
+
+}
+
 
 // =========================
 // Volleyball Scoring

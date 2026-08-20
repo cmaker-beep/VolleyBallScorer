@@ -69,7 +69,7 @@ function logout() {
 function continueAsGuest() {
 
     sessionStorage.setItem("guestMode", "true");
-    window.location.href = "scorerboard.html";
+    window.location.href = "scoreboard.html";
 
 }
 
